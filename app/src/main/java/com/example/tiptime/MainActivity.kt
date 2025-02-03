@@ -112,7 +112,6 @@ fun EditNumberField(modifier: Modifier = Modifier) {
     )
 }
 
-
 @Preview(showBackground = true)
 @Composable
 fun TipTimeLayoutPreview() {
