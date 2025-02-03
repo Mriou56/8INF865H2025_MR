@@ -15,6 +15,7 @@
  */
 package com.example.tiptime
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -33,6 +34,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -40,6 +42,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.tiptime.ui.theme.TipTimeTheme
 import java.text.NumberFormat
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+
+var amountInput: MutableState<String> = mutableStateOf("0")
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -94,9 +103,11 @@ private fun calculateTip(amount: Double, tipPercent: Double = 15.0): String {
 
 @Composable
 fun EditNumberField(modifier: Modifier = Modifier) {
+    var amountInput by remember { mutableStateOf("") }
+
     TextField(
-        value = "",
-        onValueChange = {},
+        value = amountInput,
+        onValueChange = { amountInput= it },
         modifier = modifier
     )
 }
