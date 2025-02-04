@@ -20,6 +20,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -57,6 +58,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.material3.Switch
+import androidx.compose.material3.Icon
+import androidx.compose.ui.res.painterResource
 
 var amountInput: MutableState<String> = mutableStateOf("0")
 
@@ -103,11 +106,13 @@ fun TipTimeLayout() {
                 .align(alignment = Alignment.Start)
         )
 
-        EditNumberField(label = R.string.bill_amount,value = amountInput, onValueChange = { amountInput = it },
+        EditNumberField(label = R.string.bill_amount, leadingIcon = R.drawable.money,
+            value = amountInput, onValueChange = { amountInput = it },
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number, imeAction = ImeAction.Next),
             modifier = Modifier.padding(bottom = 32.dp).fillMaxWidth())
 
-        EditNumberField(label = R.string.how_was_the_service, value = tipInput, onValueChange = { tipInput = it },
+        EditNumberField(label = R.string.how_was_the_service, value = tipInput, leadingIcon = R.drawable.percent,
+            onValueChange = { tipInput = it },
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number, imeAction = ImeAction.Done),
             modifier = Modifier.padding(bottom = 32.dp).fillMaxWidth())
 
@@ -141,11 +146,12 @@ private fun calculateTip(amount: Double, tipPercent: Double = 15.0, roundUp: Boo
 }
 
 @Composable
-fun EditNumberField(@StringRes label: Int, value: String, onValueChange: (String) -> Unit,
+fun EditNumberField(@StringRes label: Int, @DrawableRes leadingIcon: Int, value: String, onValueChange: (String) -> Unit,
                     keyboardOptions: KeyboardOptions, modifier: Modifier = Modifier) {
 
     TextField(
         value = value,
+        leadingIcon = { Icon(painter = painterResource(id = leadingIcon), null) },
         onValueChange = onValueChange,
         modifier = modifier,
         label = { Text(stringResource(label)) },
